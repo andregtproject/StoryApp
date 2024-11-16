@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">SiStory</string>
+    <string name="signup">Daftar</string>
+    <string name="login">Masuk</string>
+    <string name="message_welcome_page">Tulis cerita seru kamu dan bikin semua tercatat di SiStory!</string>
+    <string name="title_welcome_page">Selamat datang di SiStory!</string>
+    <string name="title_signup_page">Lengkapi data dirimu di bawah ini ya</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="message_login_page">Masukkan dulu datamu ya</string>
+    <string name="title_login_page">Sudah siap untuk catat ceritamu?</string>
+    <string name="name">Nama</string>
+    <string name="message_main_page">Selamat Berkreasi di SiStory.</string>
+    <string name="greeting">Halo %1$s,</string>
+    <string name="logout">Keluar</string>
+    <string name="app_logo">App Logo</string>
+</resources>
