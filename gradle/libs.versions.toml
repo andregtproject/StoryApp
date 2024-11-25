@@ -22,8 +22,8 @@ playServicesMaps = "19.0.0"
 pagingRuntimeKtx = "3.1.0"
 coreTesting = "2.1.0"
 kotlinxCoroutinesTest = "1.6.1"
-mockitoCore = "4.4.0"
-mockitoInline = "4.4.0"
+mockitoCore = "5.14.2"
+mockitoInline = "5.2.0"
 
 [libraries]
 activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }

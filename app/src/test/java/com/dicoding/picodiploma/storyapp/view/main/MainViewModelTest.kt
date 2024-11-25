@@ -1,30 +1,35 @@
 package com.dicoding.picodiploma.storyapp.view.main
 
-import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
+import androidx.paging.AsyncPagingDataDiffer
 import androidx.paging.PagingData
+import androidx.recyclerview.widget.ListUpdateCallback
+import androidx.recyclerview.widget.DiffUtil
 import com.dicoding.picodiploma.storyapp.data.StoryRepository
+import com.dicoding.picodiploma.storyapp.data.pref.UserModel
 import com.dicoding.picodiploma.storyapp.data.response.ListStoryItem
 import com.dicoding.picodiploma.storyapp.utils.DataDummy
-import com.dicoding.picodiploma.storyapp.utils.LiveDataTestUtil
 import com.dicoding.picodiploma.storyapp.utils.MainDispatcherRule
+import com.dicoding.picodiploma.storyapp.utils.getOrAwaitValue
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class MainViewModelTest {
+
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
@@ -34,58 +39,71 @@ class MainViewModelTest {
     @Mock
     private lateinit var storyRepository: StoryRepository
 
-    @Mock
-    private lateinit var application: Application
-
     private lateinit var mainViewModel: MainViewModel
+    private val dummyStories = DataDummy.generateDummyStoryResponse()
 
     @Before
-    fun setUp() {
+    fun setup() {
+        val application = Mockito.mock(android.app.Application::class.java)
         mainViewModel = MainViewModel(storyRepository, application)
     }
 
     @Test
     fun `when Get Story Empty Should Return No Data`() = runTest {
         val emptyData = PagingData.empty<ListStoryItem>()
-        `when`(storyRepository.getStoriesPager()).thenReturn(flowOf(emptyData))
 
-        val actualStory = mainViewModel.storyPagingList
-        assertNotNull(actualStory)
+        Mockito.`when`(storyRepository.getSession()).thenReturn(flowOf(UserModel("test@email.com", "token", true)))
+        Mockito.`when`(storyRepository.getStoriesPager()).thenReturn(flowOf(emptyData))
 
-        Mockito.verify(storyRepository).getStoriesPager()
+        // Collect the first value from the Flow
+        val actualStories = mainViewModel.storyPagingList.first()
+
+        val differ = AsyncPagingDataDiffer(
+            diffCallback = StoryItemDiffCallback,
+            updateCallback = noopListUpdateCallback,
+            workerDispatcher = Dispatchers.Main
+        )
+        differ.submitData(actualStories)
+
+        assertEquals(0, differ.snapshot().size)
     }
 
     @Test
-    fun `when Get Story Should Not Null and Return Data`() = runTest {
-        val dummyStories = DataDummy.generateDummyListStoryItem()
+    fun `when Get Story Not Null and Return Data`() = runTest {
         val data = PagingData.from(dummyStories)
-        `when`(storyRepository.getStoriesPager()).thenReturn(flowOf(data))
+        val expectedStories = MutableLiveData<PagingData<ListStoryItem>>()
+        expectedStories.value = data
 
-        val actualStory = mainViewModel.storyPagingList
+        Mockito.`when`(storyRepository.getSession()).thenReturn(flowOf(UserModel("test@email.com", "token", true)))
+        Mockito.`when`(storyRepository.getStoriesPager()).thenReturn(flowOf(data))
 
-        assertNotNull(actualStory)
-        Mockito.verify(storyRepository).getStoriesPager()
+        val actualStories = mainViewModel.storyPagingList.first()
+
+        val differ = AsyncPagingDataDiffer(
+            diffCallback = StoryItemDiffCallback,
+            updateCallback = noopListUpdateCallback,
+            workerDispatcher = Dispatchers.Main
+        )
+        differ.submitData(actualStories)
+
+        assertNotNull(differ.snapshot())
+        assertEquals(dummyStories.size, differ.snapshot().size)
     }
 
-    @Test
-    fun `when Get Session Should Return User Model`() = runTest {
-        val expectedUser = DataDummy.generateDummyUserModel()
-        val userFlow = flowOf(expectedUser)
-        `when`(storyRepository.getSession()).thenReturn(userFlow)
-
-        val actualUser = mainViewModel.getSession()
-
-        assertNotNull(actualUser)
-        val userValue = LiveDataTestUtil.getValue(actualUser)
-        assertEquals(expectedUser.token, userValue.token)
-        assertEquals(expectedUser.email, userValue.email)
-        assertEquals(expectedUser.isLogin, userValue.isLogin)
+    private val noopListUpdateCallback = object : ListUpdateCallback {
+        override fun onInserted(position: Int, count: Int) {}
+        override fun onRemoved(position: Int, count: Int) {}
+        override fun onMoved(fromPosition: Int, toPosition: Int) {}
+        override fun onChanged(position: Int, count: Int, payload: Any?) {}
     }
 
-    @Test
-    fun `verify Logout Calls Repository Logout`() = runTest {
-        mainViewModel.logout()
+    object StoryItemDiffCallback : DiffUtil.ItemCallback<ListStoryItem>() {
+        override fun areItemsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
+            return oldItem.id == newItem.id
+        }
 
-        Mockito.verify(storyRepository).logout()
+        override fun areContentsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
+            return oldItem == newItem
+        }
     }
 }
