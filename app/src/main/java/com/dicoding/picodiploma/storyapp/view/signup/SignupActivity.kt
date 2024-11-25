@@ -11,6 +11,7 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.dicoding.picodiploma.storyapp.R
 import com.dicoding.picodiploma.storyapp.data.ResultState
 import com.dicoding.picodiploma.storyapp.databinding.ActivitySignupBinding
 import com.dicoding.picodiploma.storyapp.view.ViewModelFactory
@@ -46,28 +47,31 @@ class SignupActivity : AppCompatActivity() {
 
     private fun setupAction() {
         binding.signupButton.setOnClickListener {
-            val name = binding.nameEditText.text.toString()
-            val email = binding.emailEditText.text.toString()
-            val password = binding.passwordEditText.text.toString()
+            val name = binding.edRegisterName.text.toString()
+            val email = binding.edRegisterEmail.text.toString()
+            val password = binding.edRegisterPassword.text.toString()
 
             when {
                 name.isEmpty() -> {
-                    binding.nameEditText.requestFocus()
+                    binding.edRegisterName.requestFocus()
                     return@setOnClickListener
                 }
+
                 email.isEmpty() -> {
-                    binding.emailEditText.requestFocus()
+                    binding.edRegisterEmail.requestFocus()
                     return@setOnClickListener
                 }
+
                 password.isEmpty() -> {
-                    binding.emailEditText.requestFocus()
+                    binding.edRegisterPassword.requestFocus()
                     return@setOnClickListener
                 }
             }
 
-            if (binding.nameEditText.error == null &&
-                binding.emailEditText.error == null &&
-                binding.passwordEditText.error == null) {
+            if (binding.edRegisterName.error == null &&
+                binding.edRegisterEmail.error == null &&
+                binding.edRegisterPassword.error == null
+            ) {
                 showLoading(true)
                 viewModel.register(name, email, password)
             }
@@ -79,15 +83,14 @@ class SignupActivity : AppCompatActivity() {
                 printLog("Register success: ${result.data.message}")
                 AlertDialog.Builder(this).apply {
                     setTitle("Yeah!")
-                    setMessage("Akun sudah jadi nih. Yuk, login dan belajar coding.")
+                    setMessage(getString(R.string.register_message))
                     setPositiveButton("Lanjut") { _, _ ->
                         finish()
                     }
                     create()
                     show()
                 }
-            }
-            else if (result is ResultState.Error) {
+            } else if (result is ResultState.Error) {
                 printLog("Register error: ${result.error}")
                 AlertDialog.Builder(this).apply {
                     setTitle("Oops!")
@@ -108,12 +111,18 @@ class SignupActivity : AppCompatActivity() {
         }.start()
 
         val title = ObjectAnimator.ofFloat(binding.titleTextView, View.ALPHA, 1f).setDuration(100)
-        val nameTextView = ObjectAnimator.ofFloat(binding.nameTextView, View.ALPHA, 1f).setDuration(100)
-        val nameEditTextLayout = ObjectAnimator.ofFloat(binding.nameEditTextLayout, View.ALPHA, 1f).setDuration(100)
-        val emailTextView = ObjectAnimator.ofFloat(binding.emailTextView, View.ALPHA, 1f).setDuration(100)
-        val emailEditTextLayout = ObjectAnimator.ofFloat(binding.emailEditTextLayout, View.ALPHA, 1f).setDuration(100)
-        val passwordTextView = ObjectAnimator.ofFloat(binding.passwordTextView, View.ALPHA, 1f).setDuration(100)
-        val passwordEditTextLayout = ObjectAnimator.ofFloat(binding.passwordEditTextLayout, View.ALPHA, 1f).setDuration(100)
+        val nameTextView =
+            ObjectAnimator.ofFloat(binding.nameTextView, View.ALPHA, 1f).setDuration(100)
+        val nameEditTextLayout =
+            ObjectAnimator.ofFloat(binding.nameEditTextLayout, View.ALPHA, 1f).setDuration(100)
+        val emailTextView =
+            ObjectAnimator.ofFloat(binding.emailTextView, View.ALPHA, 1f).setDuration(100)
+        val emailEditTextLayout =
+            ObjectAnimator.ofFloat(binding.emailEditTextLayout, View.ALPHA, 1f).setDuration(100)
+        val passwordTextView =
+            ObjectAnimator.ofFloat(binding.passwordTextView, View.ALPHA, 1f).setDuration(100)
+        val passwordEditTextLayout =
+            ObjectAnimator.ofFloat(binding.passwordEditTextLayout, View.ALPHA, 1f).setDuration(100)
         val signup = ObjectAnimator.ofFloat(binding.signupButton, View.ALPHA, 1f).setDuration(100)
 
         AnimatorSet().apply {

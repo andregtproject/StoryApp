@@ -12,6 +12,8 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.dicoding.picodiploma.storyapp.ImagesBannerWidget
+import com.dicoding.picodiploma.storyapp.R
 import com.dicoding.picodiploma.storyapp.data.ResultState
 import com.dicoding.picodiploma.storyapp.databinding.ActivityLoginBinding
 import com.dicoding.picodiploma.storyapp.view.ViewModelFactory
@@ -48,21 +50,22 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setupAction() {
         binding.loginButton.setOnClickListener {
-            val email = binding.emailEditText.text.toString()
-            val password = binding.passwordEditText.text.toString()
+            val email = binding.edLoginEmail.text.toString()
+            val password = binding.edLoginPassword.text.toString()
 
             when {
                 email.isEmpty() -> {
-                    binding.emailEditText.requestFocus()
+                    binding.edLoginEmail.requestFocus()
                     return@setOnClickListener
                 }
+
                 password.isEmpty() -> {
-                    binding.passwordEditText.requestFocus()
+                    binding.edLoginPassword.requestFocus()
                     return@setOnClickListener
                 }
             }
 
-            if (binding.emailEditText.error == null && binding.passwordEditText.error == null) {
+            if (binding.edLoginEmail.error == null && binding.edLoginPassword.error == null) {
                 showLoading(true)
                 viewModel.login(email, password)
             }
@@ -72,20 +75,23 @@ class LoginActivity : AppCompatActivity() {
             showLoading(false)
             if (result is ResultState.Success) {
                 printLog("Login success: ${result.data.message}")
+
+                ImagesBannerWidget.updateWidget(this)
+
                 AlertDialog.Builder(this).apply {
                     setTitle("Yeah!")
-                    setMessage("Anda berhasil login. Sudah tidak sabar untuk berbagi cerita seru kamu ya?")
+                    setMessage(getString(R.string.login_message))
                     setPositiveButton("Lanjut") { _, _ ->
                         val intent = Intent(context, MainActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        intent.flags =
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                         startActivity(intent)
                         finish()
                     }
                     create()
                     show()
                 }
-            }
-            else if (result is ResultState.Error) {
+            } else if (result is ResultState.Error) {
                 printLog("Login error: ${result.error}")
                 AlertDialog.Builder(this).apply {
                     setTitle("Oops!")
@@ -106,11 +112,16 @@ class LoginActivity : AppCompatActivity() {
         }.start()
 
         val title = ObjectAnimator.ofFloat(binding.titleTextView, View.ALPHA, 1f).setDuration(100)
-        val message = ObjectAnimator.ofFloat(binding.messageTextView, View.ALPHA, 1f).setDuration(100)
-        val emailTextView = ObjectAnimator.ofFloat(binding.emailTextView, View.ALPHA, 1f).setDuration(100)
-        val emailEditTextLayout = ObjectAnimator.ofFloat(binding.emailEditTextLayout, View.ALPHA, 1f).setDuration(100)
-        val passwordTextView = ObjectAnimator.ofFloat(binding.passwordTextView, View.ALPHA, 1f).setDuration(100)
-        val passwordEditTextLayout = ObjectAnimator.ofFloat(binding.passwordEditTextLayout, View.ALPHA, 1f).setDuration(100)
+        val message =
+            ObjectAnimator.ofFloat(binding.messageTextView, View.ALPHA, 1f).setDuration(100)
+        val emailTextView =
+            ObjectAnimator.ofFloat(binding.emailTextView, View.ALPHA, 1f).setDuration(100)
+        val emailEditTextLayout =
+            ObjectAnimator.ofFloat(binding.emailEditTextLayout, View.ALPHA, 1f).setDuration(100)
+        val passwordTextView =
+            ObjectAnimator.ofFloat(binding.passwordTextView, View.ALPHA, 1f).setDuration(100)
+        val passwordEditTextLayout =
+            ObjectAnimator.ofFloat(binding.passwordEditTextLayout, View.ALPHA, 1f).setDuration(100)
         val login = ObjectAnimator.ofFloat(binding.loginButton, View.ALPHA, 1f).setDuration(100)
 
         AnimatorSet().apply {

@@ -1,17 +1,41 @@
 <resources>
-    <string name="app_name">SiStory</string>
+    <string name="app_name" translatable="false">SiStory</string>
     <string name="signup">Daftar</string>
     <string name="login">Masuk</string>
-    <string name="message_welcome_page">Tulis cerita seru kamu dan bikin semua tercatat di SiStory!</string>
+    <string name="message_welcome_page">Tulis cerita seru kamu di SiStory.</string>
     <string name="title_welcome_page">Selamat datang di SiStory!</string>
     <string name="title_signup_page">Lengkapi data dirimu di bawah ini ya</string>
     <string name="email">Email</string>
-    <string name="password">Password</string>
+    <string name="password">Kata Sandi</string>
     <string name="message_login_page">Masukkan dulu datamu ya</string>
-    <string name="title_login_page">Sudah siap untuk catat ceritamu?</string>
+    <string name="title_login_page">Sudah siap untuk berbagi ceritamu?</string>
     <string name="name">Nama</string>
-    <string name="message_main_page">Selamat Berkreasi di SiStory.</string>
-    <string name="greeting">Halo %1$s,</string>
+    <string name="message_main_page">Selamat Berkreasi di SiStory</string>
     <string name="logout">Keluar</string>
-    <string name="app_logo">App Logo</string>
+    <string name="app_logo" translatable="false">App Logo</string>
+    <string name="story_image" translatable="false">Story Image</string>
+    <string name="description">Deskripsi</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Galeri</string>
+    <string name="upload_story">Upload Cerita</string>
+    <string name="welcome_image" translatable="false">Welcome Image</string>
+    <string name="change_language" translatable="false">Change Language</string>
+    <string name="login_message">Anda berhasil masuk. Sudah tidak sabar untuk berbagi cerita seru kamu ya?</string>
+    <string name="register_message">Akun sudah jadi nih. Yuk, masuk dan berbagi cerita!</string>
+    <string name="image_upload_message">Silakan pilih gambar terlebih dahulu</string>
+    <string name="permission_request_granted">Permintaan izin diberikan</string>
+    <string name="permission_request_denied">Permintaan izin ditolak</string>
+    <string name="empty_name_message">Nama tidak boleh kosong</string>
+    <string name="characters_name_message">Nama tidak boleh kurang dari 3 karakter</string>
+    <string name="empty_email_message">Email tidak boleh kosong</string>
+    <string name="email_format_message">Format email tidak valid</string>
+    <string name="empty_password_message">Kata sandi tidak boleh kosong</string>
+    <string name="characters_password_message">Password tidak boleh kurang dari 8 karakter</string>
+    <string name="empty_description_message">Deskripsi tidak boleh kosong</string>
+    <string name="no_internet_connection">Tidak ada koneksi internet</string>
+    <string name="upload">Upload</string>
+    <string name="tap_to_view_story">Ketuk untuk melihat detail cerita</string>
+    <string name="no_stories_available">Tidak ada cerita yang tersedia</string>
+    <string name="please_login">Silakan Masuk untuk melihat cerita</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>

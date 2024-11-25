@@ -10,13 +10,16 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/topAppBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimaryDark"
+            android:background="@android:color/transparent"
             app:title="@string/app_name"
             app:titleTextColor="@android:color/white">
 
@@ -30,7 +33,6 @@
                     android:id="@+id/app_logo"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:layout_marginEnd="8dp"
                     android:contentDescription="@string/app_logo"
                     android:src="@drawable/app_logo" />
 
@@ -38,28 +40,52 @@
                     android:id="@+id/app_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
                     android:text="@string/app_name"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <ImageButton
-                    android:id="@+id/logout_button"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:id="@+id/action_maps"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Maps"
                     android:scaleType="centerCrop"
+                    android:src="@drawable/ic_map"
+                    app:tint="@color/white" />
+
+                <ImageButton
+                    android:id="@+id/action_localization"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/change_language"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_language"
+                    app:tint="@color/white" />
+
+                <ImageButton
+                    android:id="@+id/action_logout"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:layout_marginEnd="16dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="@string/logout"
-                    android:src="@drawable/ic_logout" />
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_logout"
+                    app:tint="@color/white" />
 
             </LinearLayout>
 
         </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvStories"
         android:layout_width="0dp"
@@ -84,5 +110,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/white"
+        android:contentDescription="@string/upload_story"
+        android:src="@drawable/ic_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/colorPrimary" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

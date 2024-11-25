@@ -3,17 +3,26 @@ package com.dicoding.picodiploma.storyapp.view.main
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.view.View
+import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dicoding.picodiploma.storyapp.data.ResultState
 import com.dicoding.picodiploma.storyapp.databinding.ActivityMainBinding
 import com.dicoding.picodiploma.storyapp.view.ViewModelFactory
+import com.dicoding.picodiploma.storyapp.view.adapter.LoadingStateAdapter
 import com.dicoding.picodiploma.storyapp.view.adapter.StoryAdapter
+import com.dicoding.picodiploma.storyapp.view.map.MapsActivity
+import com.dicoding.picodiploma.storyapp.view.upload.UploadStoryActivity
 import com.dicoding.picodiploma.storyapp.view.welcome.WelcomeActivity
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private val viewModel by viewModels<MainViewModel> {
@@ -31,16 +40,28 @@ class MainActivity : AppCompatActivity() {
             if (!user.isLogin) {
                 startActivity(Intent(this, WelcomeActivity::class.java))
                 finish()
+            } else {
+                setupRecyclerView()
+                observeStories()
             }
         }
 
         setupAction()
-        setupRecyclerView()
-        observeStories()
     }
 
     private fun setupAction() {
-        binding.logoutButton.setOnClickListener {
+        binding.buttonAdd.apply {
+            setOnClickListener {
+                startActivity(Intent(this@MainActivity, UploadStoryActivity::class.java))
+            }
+        }
+        binding.actionMaps.setOnClickListener {
+            startActivity(Intent(this@MainActivity, MapsActivity::class.java))
+        }
+        binding.actionLocalization.setOnClickListener {
+            startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+        }
+        binding.actionLogout.setOnClickListener {
             viewModel.logout()
         }
     }
@@ -48,35 +69,36 @@ class MainActivity : AppCompatActivity() {
     private fun setupRecyclerView() {
         adapter = StoryAdapter()
         binding.rvStories.apply {
-            layoutManager = if (applicationContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                GridLayoutManager(this@MainActivity, 2)
-            } else {
-                LinearLayoutManager(this@MainActivity)
+            layoutManager =
+                if (applicationContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    GridLayoutManager(this@MainActivity, 2)
+                } else {
+                    LinearLayoutManager(this@MainActivity)
+                }
+            adapter = this@MainActivity.adapter.withLoadStateFooter(
+                footer = LoadingStateAdapter { this@MainActivity.adapter.retry() }
+            )
+        }
+
+        adapter.addLoadStateListener { loadState ->
+            binding.progressBar.isVisible = loadState.source.refresh is LoadState.Loading
+            if (loadState.source.refresh is LoadState.Error) {
+                Toast.makeText(
+                    this,
+                    "Error: ${(loadState.source.refresh as LoadState.Error).error.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-            adapter = this@MainActivity.adapter
         }
     }
 
     private fun observeStories() {
-        viewModel.getStories()
-        viewModel.storyList.observe(this) { result ->
-            when (result) {
-                is ResultState.Loading -> {
-                    showLoading(true)
-                }
-                is ResultState.Success -> {
-                    showLoading(false)
-                    adapter.submitList(result.data)
-                }
-                is ResultState.Error -> {
-                    showLoading(false)
-                    Toast.makeText(this, result.error, Toast.LENGTH_SHORT).show()
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.storyPagingList.collectLatest { pagingData ->
+                    adapter.submitData(pagingData)
                 }
             }
         }
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }

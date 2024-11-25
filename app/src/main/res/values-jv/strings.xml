@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">SiStory</string>
+    <string name="signup">Daftar</string>
+    <string name="login">Mlebet</string>
+    <string name="message_welcome_page">Serat criyos seru panjenengan wonten SiStory.</string>
+    <string name="title_welcome_page">Wilujeng dugi wonten SiStory!</string>
+    <string name="title_signup_page">Jangkepi data panjenengan wonten ngandhap puniki nggih</string>
+    <string name="email">Email</string>
+    <string name="password">Tembung Sandi</string>
+    <string name="message_login_page">Mlebetke rumiyin datanipun panjenengan nggih</string>
+    <string name="title_login_page">Sampun siyap kangge ngendikaaken criyos panjenengan?</string>
+    <string name="name">Asma</string>
+    <string name="message_main_page">Sugeng Anggèn Panjenengan Kriya ing SiStory.</string>
+    <string name="logout">Medal</string>
+    <string name="description">Deskripsi</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Galeri</string>
+    <string name="upload_story">Upload Criyos</string>
+    <string name="login_message">Panjenengan sampun saget mlebet. Sampun mboten kantos ngendikaaken criyos ingkang seru, nggih?</string>
+    <string name="register_message">Akun sampun dados, nggih. Monggo, mlebet lan ngendikaaken criyos!</string>
+    <string name="image_upload_message">Mangga panjenengan milih gambar rumiyin</string>
+    <string name="permission_request_granted">Panyuwun izin dipunsukakaken</string>
+    <string name="permission_request_denied">Panyuwun izin dipuntolak</string>
+    <string name="empty_name_message">Asma mboten kepareng kosong</string>
+    <string name="characters_name_message">Asma mboten kepareng kirang saking 3 karakter</string>
+    <string name="empty_email_message">Email mboten kepareng kosong</string>
+    <string name="email_format_message">Format email mboten leres</string>
+    <string name="empty_password_message">Tembung sandi mboten kepareng kosong</string>
+    <string name="characters_password_message">Tembung sandi mboten kepareng kirang saking 8 karakter</string>
+    <string name="empty_description_message">Deskripsi mboten kepareng kosong</string>
+    <string name="no_internet_connection">Mboten wonten koneksi internet</string>
+    <string name="upload">Upload</string>
+    <string name="tap_to_view_story">Ketuk kagem sumerep detail criyos</string>
+    <string name="no_stories_available">Mboten wonten criyos ingkang wonten</string>
+    <string name="please_login">Monggo mlebet kagem sumerep criyos </string>
+    <string name="title_activity_maps">MapsActivity</string>
+</resources>
