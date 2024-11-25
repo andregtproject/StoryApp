@@ -46,8 +46,10 @@ class MainViewModelTest {
     fun setup() {
         val application = Mockito.mock(android.app.Application::class.java)
 
-        Mockito.`when`(storyRepository.getSession()).thenReturn(flowOf(UserModel("test@email.com", "token", true)))
-        Mockito.`when`(storyRepository.getStoriesPager()).thenReturn(flowOf(PagingData.from(dummyStories)))
+        Mockito.`when`(storyRepository.getSession())
+            .thenReturn(flowOf(UserModel("test@email.com", "token", true)))
+        Mockito.`when`(storyRepository.getStoriesPager())
+            .thenReturn(flowOf(PagingData.from(dummyStories)))
 
         mainViewModel = MainViewModel(storyRepository, application)
     }
@@ -55,9 +57,8 @@ class MainViewModelTest {
     @Test
     fun `when Get Story Empty Should Return No Data`() = runTest {
         val emptyData = PagingData.empty<ListStoryItem>()
-
-        Mockito.`when`(storyRepository.getSession()).thenReturn(flowOf(UserModel("test@email.com", "token", true)))
-        Mockito.`when`(storyRepository.getStoriesPager()).thenReturn(flowOf(emptyData))
+        Mockito.`when`(storyRepository.getStoriesPager())
+            .thenReturn(flowOf(emptyData))
 
         val actualStories = mainViewModel.storyPagingList.first()
 
@@ -75,9 +76,8 @@ class MainViewModelTest {
     @Test
     fun `when Get Story Not Null and Return Data`() = runTest {
         val data = PagingData.from(dummyStories)
-
-        Mockito.`when`(storyRepository.getSession()).thenReturn(flowOf(UserModel("test@email.com", "token", true)))
-        Mockito.`when`(storyRepository.getStoriesPager()).thenReturn(flowOf(data))
+        Mockito.`when`(storyRepository.getStoriesPager())
+            .thenReturn(flowOf(data))
 
         val actualStories = mainViewModel.storyPagingList.first()
 
@@ -90,6 +90,7 @@ class MainViewModelTest {
 
         assertNotNull(differ.snapshot())
         assertEquals(dummyStories.size, differ.snapshot().size)
+        assertEquals(dummyStories[0], differ.snapshot()[0])
     }
 
     private val noopListUpdateCallback = object : ListUpdateCallback {
