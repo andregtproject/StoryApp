@@ -45,6 +45,10 @@ class MainViewModelTest {
     @Before
     fun setup() {
         val application = Mockito.mock(android.app.Application::class.java)
+
+        Mockito.`when`(storyRepository.getSession()).thenReturn(flowOf(UserModel("test@email.com", "token", true)))
+        Mockito.`when`(storyRepository.getStoriesPager()).thenReturn(flowOf(PagingData.from(dummyStories)))
+
         mainViewModel = MainViewModel(storyRepository, application)
     }
 
@@ -55,7 +59,6 @@ class MainViewModelTest {
         Mockito.`when`(storyRepository.getSession()).thenReturn(flowOf(UserModel("test@email.com", "token", true)))
         Mockito.`when`(storyRepository.getStoriesPager()).thenReturn(flowOf(emptyData))
 
-        // Collect the first value from the Flow
         val actualStories = mainViewModel.storyPagingList.first()
 
         val differ = AsyncPagingDataDiffer(
@@ -68,11 +71,10 @@ class MainViewModelTest {
         assertEquals(0, differ.snapshot().size)
     }
 
+
     @Test
     fun `when Get Story Not Null and Return Data`() = runTest {
         val data = PagingData.from(dummyStories)
-        val expectedStories = MutableLiveData<PagingData<ListStoryItem>>()
-        expectedStories.value = data
 
         Mockito.`when`(storyRepository.getSession()).thenReturn(flowOf(UserModel("test@email.com", "token", true)))
         Mockito.`when`(storyRepository.getStoriesPager()).thenReturn(flowOf(data))
