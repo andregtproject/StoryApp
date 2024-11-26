@@ -38,4 +38,6 @@
     <string name="no_stories_available">Tidak ada cerita yang tersedia</string>
     <string name="please_login">Silakan Masuk untuk melihat cerita</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="maps" translatable="false">Action Maps</string>
+    <string name="try_again">Coba Lagi</string>
 </resources>

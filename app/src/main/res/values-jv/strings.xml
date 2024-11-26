@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">SiStory</string>
     <string name="signup">Daftar</string>
     <string name="login">Mlebet</string>
     <string name="message_welcome_page">Serat criyos seru panjenengan wonten SiStory.</string>
@@ -34,4 +33,5 @@
     <string name="no_stories_available">Mboten wonten criyos ingkang wonten</string>
     <string name="please_login">Monggo mlebet kagem sumerep criyos </string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="try_again">Cobi Malih</string>
 </resources>

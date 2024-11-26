@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">SiStory</string>
     <string name="signup">Register</string>
     <string name="login">Login</string>
     <string name="message_welcome_page">Write your exciting story on SiStory.</string>
@@ -12,7 +11,6 @@
     <string name="name">Name</string>
     <string name="message_main_page">Happy Creating on SiStory</string>
     <string name="logout">Exit</string>
-    <string name="story_image">Story Image</string>
     <string name="description">Description</string>
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
@@ -35,4 +33,5 @@
     <string name="no_stories_available">No stories available</string>
     <string name="please_login">Please login to view stories</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="try_again">Try Again</string>
 </resources>
