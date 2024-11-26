@@ -1,11 +1,10 @@
 package com.dicoding.picodiploma.storyapp.view.main
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.MutableLiveData
 import androidx.paging.AsyncPagingDataDiffer
 import androidx.paging.PagingData
-import androidx.recyclerview.widget.ListUpdateCallback
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListUpdateCallback
 import com.dicoding.picodiploma.storyapp.data.StoryRepository
 import com.dicoding.picodiploma.storyapp.data.local.entity.StoryEntity
 import com.dicoding.picodiploma.storyapp.data.pref.UserModel
@@ -17,7 +16,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
