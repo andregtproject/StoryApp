@@ -7,9 +7,9 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.dicoding.picodiploma.storyapp.data.api.ApiService
-import com.dicoding.picodiploma.storyapp.data.local.entity.RemoteKeys
-import com.dicoding.picodiploma.storyapp.data.local.entity.StoryEntity
-import com.dicoding.picodiploma.storyapp.data.local.room.StoryDatabase
+import com.dicoding.picodiploma.storyapp.data.local.RemoteKeys
+import com.dicoding.picodiploma.storyapp.data.local.StoryDatabase
+import com.dicoding.picodiploma.storyapp.data.local.StoryEntity
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -33,12 +33,14 @@ class StoryRemoteMediator(
                 val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
                 remoteKeys?.nextKey?.minus(1) ?: INITIAL_PAGE_INDEX
             }
+
             LoadType.PREPEND -> {
                 val remoteKeys = getRemoteKeyForFirstItem(state)
                 val prevKey = remoteKeys?.prevKey
                     ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
                 prevKey
             }
+
             LoadType.APPEND -> {
                 val remoteKeys = getRemoteKeyForLastItem(state)
                 val nextKey = remoteKeys?.nextKey

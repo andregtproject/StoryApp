@@ -10,7 +10,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.dicoding.picodiploma.storyapp.data.local.entity.StoryEntity
+import com.dicoding.picodiploma.storyapp.data.local.StoryEntity
 import com.dicoding.picodiploma.storyapp.databinding.ItemStoryBinding
 import com.dicoding.picodiploma.storyapp.view.detail.DetailActivity
 

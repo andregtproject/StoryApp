@@ -6,7 +6,7 @@ import androidx.paging.PagingData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListUpdateCallback
 import com.dicoding.picodiploma.storyapp.data.StoryRepository
-import com.dicoding.picodiploma.storyapp.data.local.entity.StoryEntity
+import com.dicoding.picodiploma.storyapp.data.local.StoryEntity
 import com.dicoding.picodiploma.storyapp.data.pref.UserModel
 import com.dicoding.picodiploma.storyapp.utils.DataDummy
 import com.dicoding.picodiploma.storyapp.utils.MainDispatcherRule

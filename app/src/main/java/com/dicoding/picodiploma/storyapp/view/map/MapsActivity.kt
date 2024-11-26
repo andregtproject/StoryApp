@@ -71,6 +71,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 is ResultState.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE
                 }
+
                 is ResultState.Success -> {
                     binding.progressBar.visibility = View.GONE
                     result.data.listStory.forEach { story ->
@@ -100,6 +101,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         Log.e(TAG, "Error setting camera bounds: ${e.message}")
                     }
                 }
+
                 is ResultState.Error -> {
                     binding.progressBar.visibility = View.GONE
                     Toast.makeText(

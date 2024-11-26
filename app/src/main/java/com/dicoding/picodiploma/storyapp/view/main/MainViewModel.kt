@@ -9,10 +9,10 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.dicoding.picodiploma.storyapp.ImagesBannerWidget
 import com.dicoding.picodiploma.storyapp.data.StoryRepository
-import com.dicoding.picodiploma.storyapp.data.local.entity.StoryEntity
+import com.dicoding.picodiploma.storyapp.data.local.StoryEntity
 import com.dicoding.picodiploma.storyapp.data.pref.UserModel
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val repository: StoryRepository,

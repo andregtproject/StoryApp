@@ -1,12 +1,10 @@
-package com.dicoding.picodiploma.storyapp.data.local.dao
+package com.dicoding.picodiploma.storyapp.data.local
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.dicoding.picodiploma.storyapp.data.local.entity.RemoteKeys
-import com.dicoding.picodiploma.storyapp.data.local.entity.StoryEntity
 
 @Dao
 interface StoryDao {

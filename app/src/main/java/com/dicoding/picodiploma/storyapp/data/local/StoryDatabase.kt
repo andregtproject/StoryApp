@@ -1,13 +1,9 @@
-package com.dicoding.picodiploma.storyapp.data.local.room
+package com.dicoding.picodiploma.storyapp.data.local
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.dicoding.picodiploma.storyapp.data.local.dao.RemoteKeysDao
-import com.dicoding.picodiploma.storyapp.data.local.dao.StoryDao
-import com.dicoding.picodiploma.storyapp.data.local.entity.RemoteKeys
-import com.dicoding.picodiploma.storyapp.data.local.entity.StoryEntity
 
 @Database(
     entities = [StoryEntity::class, RemoteKeys::class],

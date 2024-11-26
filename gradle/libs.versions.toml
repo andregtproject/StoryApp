@@ -26,7 +26,7 @@ mockitoCore = "5.14.2"
 mockitoInline = "5.2.0"
 roomVersion = "2.6.1"
 kspVersion ="2.0.20-1.0.24"
-
+playServicesLocation = "21.2.0"
 
 [libraries]
 activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
@@ -55,6 +55,7 @@ androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomVersion" }
 androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "roomVersion" }
 ksp-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomVersion" }
+play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

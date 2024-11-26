@@ -40,4 +40,9 @@
     <string name="title_activity_maps">MapsActivity</string>
     <string name="maps" translatable="false">Action Maps</string>
     <string name="try_again">Coba Lagi</string>
+    <string name="location_tracking_disabled">Pelacakan lokasi dinonaktifkan</string>
+    <string name="include_current_location">Sertakan Lokasi Saat Ini</string>
+    <string name="failed_to_get_location">Gagal mendapatkan lokasi</string>
+    <string name="unable_to_get_current_location">Tidak dapat mendapatkan lokasi saat ini</string>
+    <string name="location">Lokasi: %1$s</string>
 </resources>

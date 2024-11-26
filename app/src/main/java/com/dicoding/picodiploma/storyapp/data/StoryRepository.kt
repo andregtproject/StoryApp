@@ -9,7 +9,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.dicoding.picodiploma.storyapp.data.api.ApiConfig
 import com.dicoding.picodiploma.storyapp.data.api.ApiService
-import com.dicoding.picodiploma.storyapp.data.local.room.StoryDatabase
+import com.dicoding.picodiploma.storyapp.data.local.StoryDatabase
 import com.dicoding.picodiploma.storyapp.data.pref.UserModel
 import com.dicoding.picodiploma.storyapp.data.pref.UserPreference
 import com.dicoding.picodiploma.storyapp.data.remote.StoryRemoteMediator
@@ -106,7 +106,12 @@ class StoryRepository private constructor(
         }
     }
 
-    fun uploadImage(imageFile: File, description: String) = liveData {
+    fun uploadImage(
+        imageFile: File,
+        description: String,
+        latitude: Double? = null,
+        longitude: Double? = null
+    ) = liveData {
         emit(ResultState.Loading)
         val requestBody = description.toRequestBody("text/plain".toMediaType())
         val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
@@ -115,8 +120,17 @@ class StoryRepository private constructor(
             imageFile.name,
             requestImageFile
         )
+
+        val latPart = latitude?.toString()?.toRequestBody("text/plain".toMediaType())
+        val lonPart = longitude?.toString()?.toRequestBody("text/plain".toMediaType())
+
         try {
-            val successResponse = apiService.uploadImage(multipartBody, requestBody)
+            val successResponse = apiService.uploadImage(
+                multipartBody,
+                requestBody,
+                latPart,
+                lonPart
+            )
             emit(ResultState.Success(successResponse))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()

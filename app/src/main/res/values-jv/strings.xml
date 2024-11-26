@@ -34,4 +34,9 @@
     <string name="please_login">Monggo mlebet kagem sumerep criyos </string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="try_again">Cobi Malih</string>
+    <string name="location_tracking_disabled">Pelacakan papan dipun-pejahaken</string>
+    <string name="include_current_location">Sertakaken papan wekdal menika</string>
+    <string name="failed_to_get_location">Sande keparingan papan</string>
+    <string name="unable_to_get_current_location">Mboten keparing papan wekdal menika</string>
+    <string name="location">Papan: %1$s</string>
 </resources>

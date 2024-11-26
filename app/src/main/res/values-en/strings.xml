@@ -34,4 +34,9 @@
     <string name="please_login">Please login to view stories</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="try_again">Try Again</string>
+    <string name="location_tracking_disabled">Location tracking disabled</string>
+    <string name="include_current_location">Include Current Location</string>
+    <string name="failed_to_get_location">Failed to get location</string>
+    <string name="unable_to_get_current_location">Unable to get current location</string>
+    <string name="location">Location: %1$s</string>
 </resources>
