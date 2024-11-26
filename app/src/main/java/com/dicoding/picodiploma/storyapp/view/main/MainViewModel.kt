@@ -9,6 +9,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.dicoding.picodiploma.storyapp.ImagesBannerWidget
 import com.dicoding.picodiploma.storyapp.data.StoryRepository
+import com.dicoding.picodiploma.storyapp.data.local.entity.StoryEntity
 import com.dicoding.picodiploma.storyapp.data.pref.UserModel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.Flow
@@ -28,7 +29,10 @@ class MainViewModel(
         }
     }
 
-    val storyPagingList by lazy { repository.getStoriesPager().cachedIn(viewModelScope) }
+    val storyPagingList: Flow<PagingData<StoryEntity>> by lazy {
+        repository.getStoriesPager()
+            .cachedIn(viewModelScope)
+    }
 
     fun getSession(): LiveData<UserModel> {
         return repository.getSession().asLiveData()

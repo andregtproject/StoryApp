@@ -79,17 +79,6 @@ class MainActivity : AppCompatActivity() {
                 footer = LoadingStateAdapter { this@MainActivity.adapter.retry() }
             )
         }
-
-        adapter.addLoadStateListener { loadState ->
-            binding.progressBar.isVisible = loadState.source.refresh is LoadState.Loading
-            if (loadState.source.refresh is LoadState.Error) {
-                Toast.makeText(
-                    this,
-                    "Error: ${(loadState.source.refresh as LoadState.Error).error.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
     }
 
     private fun observeStories() {
@@ -98,6 +87,24 @@ class MainActivity : AppCompatActivity() {
                 viewModel.storyPagingList.collectLatest { pagingData ->
                     adapter.submitData(pagingData)
                 }
+            }
+        }
+
+        adapter.addLoadStateListener { loadState ->
+            binding.progressBar.isVisible = loadState.source.refresh is LoadState.Loading
+
+            val errorState = loadState.source.append as? LoadState.Error
+                ?: loadState.source.prepend as? LoadState.Error
+                ?: loadState.append as? LoadState.Error
+                ?: loadState.prepend as? LoadState.Error
+                ?: loadState.refresh as? LoadState.Error
+
+            errorState?.let {
+                Toast.makeText(
+                    this,
+                    "Error: ${it.error.localizedMessage}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

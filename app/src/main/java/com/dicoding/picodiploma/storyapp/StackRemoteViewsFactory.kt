@@ -23,7 +23,7 @@ class StackRemoteViewsFactory(private val mContext: Context) :
     private val pref by lazy { UserPreference.getInstance(mContext.dataStore) }
     private val repository: StoryRepository by lazy {
         val apiService = ApiConfig.getApiService("")
-        StoryRepository.getInstance(apiService, pref)
+        StoryRepository.getInstance(apiService, pref, this.mContext)
     }
 
     override fun onCreate() {

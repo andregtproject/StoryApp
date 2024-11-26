@@ -1,14 +1,18 @@
 package com.dicoding.picodiploma.storyapp.data
 
-import android.util.Log
+import android.annotation.SuppressLint
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.dicoding.picodiploma.storyapp.data.api.ApiConfig
 import com.dicoding.picodiploma.storyapp.data.api.ApiService
+import com.dicoding.picodiploma.storyapp.data.local.room.StoryDatabase
 import com.dicoding.picodiploma.storyapp.data.pref.UserModel
 import com.dicoding.picodiploma.storyapp.data.pref.UserPreference
+import com.dicoding.picodiploma.storyapp.data.remote.StoryRemoteMediator
 import com.dicoding.picodiploma.storyapp.data.response.ErrorResponse
 import com.dicoding.picodiploma.storyapp.data.response.ListStoryItem
 import com.dicoding.picodiploma.storyapp.data.response.LoginResponse
@@ -28,8 +32,11 @@ import java.io.File
 
 class StoryRepository private constructor(
     private var apiService: ApiService,
-    private val userPreference: UserPreference
+    private val userPreference: UserPreference,
+    private val context: Context
 ) {
+    private val database by lazy { StoryDatabase.getInstance(context) }
+
     fun updateApiService(token: String) {
         apiService = ApiConfig.getApiService(token)
     }
@@ -72,12 +79,17 @@ class StoryRepository private constructor(
         return userPreference.getSession()
     }
 
+    @OptIn(ExperimentalPagingApi::class)
     fun getStoriesPager() = Pager(
         config = PagingConfig(
             pageSize = 5
         ),
+        remoteMediator = StoryRemoteMediator(
+            database = database,
+            apiService = apiService
+        ),
         pagingSourceFactory = {
-            StoryPagingSource(apiService)
+            database.storyDao().getAllStories()
         }
     ).flow
 
@@ -144,14 +156,16 @@ class StoryRepository private constructor(
     }
 
     companion object {
+        @SuppressLint("StaticFieldLeak")
         @Volatile
         private var instance: StoryRepository? = null
         fun getInstance(
             apiService: ApiService,
-            userPreference: UserPreference
+            userPreference: UserPreference,
+            context: Context
         ): StoryRepository =
             instance ?: synchronized(this) {
-                instance ?: StoryRepository(apiService, userPreference)
+                instance ?: StoryRepository(apiService, userPreference, context)
             }.also { instance = it }
     }
 }
